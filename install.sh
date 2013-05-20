@@ -23,7 +23,6 @@ then
 	exit 1
 fi
 
-KEY_CMD_CHECK="gpg --homedir /root/.gnupg --list-keys | grep Logentries"
 KEY_CMD="gpg --homedir /root/.gnupg --keyserver pgp.mit.edu --recv-keys C43C79AD && gpg -a --export C43C79AD | apt-key add -"
 
 DEBIAN_REPO_CONF="/etc/apt/sources.list.d/logentries.list"
@@ -44,17 +43,9 @@ if hash lsb_release 2>/dev/null; then
 fi
 
 REGISTER_CMD="le register"
-AMAZON_CHECK=0
 FOUND=0
 
-if [ -f /etc/issue ]; then
-	grep "Amazon Linux AMI" /etc/issue -q
-	if [ $? == "0" ]; then
-		AMAZON_CHECK=1
-	fi
-fi
-
-if [ $AMAZON_CHECK == "1" ]; then
+if [ -f /etc/issue ] && grep "Amazon Linux AMI" /etc/issue -q; then
 	# Amazon Linux AMI
 cat << EOL >> $REDHAT_REPO_CONF
 [logentries]
