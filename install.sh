@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bashi
 
 #############################################
 #
@@ -12,6 +12,8 @@
 #		Amazon AMI					
 #											
 #############################################
+
+set -e
 
 # Need root to run this script
 if [ "$(id -u)" != "0" ] 
@@ -52,7 +54,7 @@ if [ -f /etc/issue ]; then
 	fi
 fi
 
-if [ $AMAZON_CHECK == "1" ] && [ $? == "0" ]; then
+if [ $AMAZON_CHECK == "1" ]; then
 	# Amazon Linux AMI
 cat << EOL >> $REDHAT_REPO_CONF
 [logentries]
